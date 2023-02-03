@@ -1,0 +1,27 @@
+[
+  {
+    "title": "UI",
+    "progress": 12,
+    "notes": "A long string bout the skill"
+  },
+  {
+    "title": "Server",
+    "progress": 32,
+    "notes": "A long string bout the skill"
+  },
+  {
+    "title": "Docker",
+    "progress": 52,
+    "notes": "A long string bout the skill"
+  },
+  {
+    "title": "Design",
+    "progress": 72,
+    "notes": "A long string bout the skill"
+  },
+  {
+    "title": "Communication",
+    "progress": 92,
+    "notes": "A long string bout the skill"
+  }
+]

@@ -1,0 +1,42 @@
+.WeatherResults {
+  display: grid;
+  padding: 1rem;
+}
+
+.WeatherHeader {
+  display: grid;
+  align-content: center;
+  text-align: center;
+  width: 100%;
+  grid-template-columns: 8rem 7rem 7rem 10rem auto;
+  background: var(--color-blue-base);
+  color: white;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.WeatherResult {
+  display: grid;
+  align-content: center;
+  text-align: center;
+  width: 100%;
+  grid-template-columns: 8rem 7rem 7rem 10rem auto;
+  background: #33333311;
+
+  &[data-empty="true"] {
+    col-span: 5;
+  }
+}
+
+.WeatherResult:nth-child(odd) {
+  background: #33333333;
+}
+
+.WeatherResult:last-child {
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: 0 2px #33333377;
+}
+
+.CenterItem {
+  align-content: center;
+  justify-items: center;
+}

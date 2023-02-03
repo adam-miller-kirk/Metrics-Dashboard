@@ -1,0 +1,22 @@
+{
+  "includes": ["./src"],
+  "compilerOptions": {
+    "sourceMap": false,
+    "noImplicitAny": false,
+    "module": "esnext",
+    "target": "ES5",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx":"react",
+    "allowJs": false,
+    "baseUrl": "./",
+    "esModuleInterop": false,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "downlevelIteration": true,
+    "paths": {
+      ".@/*": ["src/*"]
+    }
+  }
+}
