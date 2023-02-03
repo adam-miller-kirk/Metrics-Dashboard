@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: metrics-dashboard
+    image: metrics-dashboard-image
+    build:
+      context: .
+    ports:
+      - 8080:80
