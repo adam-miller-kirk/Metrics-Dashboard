@@ -4,17 +4,15 @@ import Title from ".@/components/title/Title";
 import Table from ".@/components/table/Table";
 import { api } from ".@/api/api";
 
-const url = `${process.env.BASE_ID}/${process.env.TABLE_ID}`;
-
 const Dashboard = () => {
   const [getRecordsLoading, setGetRecordsLoading] = useState(false);
-  const [offset, setOffset] = useState("Adam");
-  const [myRecords, setMyRecords] = useState([]);
 
   const processTableData = async () => {
     // setGetOrdersLoading(true);
     let offset = null; // no initial offset
     let records = [];
+    const url = `${process.env.BASE_ID}/${process.env.TABLE_ID}`;
+    const headers = { Authorization: `Bearer ${process.env.BEARER_TOKEN}` };
 
     let params = {
       pageSize: 100,
@@ -24,11 +22,9 @@ const Dashboard = () => {
       offset,
     };
 
-    // create an array to hold all of our records
-
     try {
       // await for the first responce to get the list
-      let response = await api.get(url, { params });
+      let response = await api.get(url, { params, headers });
 
       // extract just field data from res
       const extractedFields = response.data.records.map(
@@ -45,7 +41,7 @@ const Dashboard = () => {
       */
       for (let i = 0; i < 9; i++) {
         params = { ...params, offset }; // update params with the new offset value
-        let response = await api.get(url, { params }); // await the res for this additional list call
+        let response = await api.get(url, { params, headers }); // await the res for this additional list call
         records.push(...extractedFields); // extend records with the extracted fields from the res
         offset = response.data.offset; // set the offset with new returned offset
       }
