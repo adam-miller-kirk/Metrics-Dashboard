@@ -12,15 +12,7 @@ This is a React project and it comes with set docker files that allow it to run 
 
 ### BEARER_TOKEN
 
-The bearer token provides our api with the authentication of using the airtable API. In order for the project to use these APIs we will need to provide the bearer token inside the header of the requests. By referencing the bearer token from inside the .env file we are reducing the risk of leaving sensitive information for anyone to find. To create a token go to <https://airtable.com/account> and follow the instruction on how to create a bearer token. Once completed save the value inside the .env file under the key BEARER_TOKEN.
-
-### BASE_ID
-
-Once you have the bearer token setup we can make calls to airtable API. We will use an API to help identify and set our BASE_ID. Using Postman we can create a GET request that returns all bases of our project. From there we can determine which file id we need. From the return json find the project name you want and use the id above. Place this id inisde the BASE_ID string
-
-### TABLE_ID
-
-Finally we need to get the TABLE_ID that we wish to use. Use Postman once more to call <https://api.airtable.com/v0/meta/bases/{{baseId}}/tables>. The baseId is the id we just saved to the BASE_ID. This api call will return a list of json showing all tables in this project. Find the table you wish to use and copy the top id value. Save this value to the TABLE_ID and the project is good to go.
+The bearer token provides our api with the authentication of using the airtable API. In order for the project to use these APIs we will need to provide the bearer token inside the header of the requests. By referencing the bearer token from inside the .env file we are reducing the risk of leaving sensitive information for anyone to find. To create a token go to <https://airtable.com/account> and follow the instruction on how to create a bearer token. The calls we need only require read permissions. Once completed save the value inside the .env file under the key BEARER_TOKEN.
 
 ## Local development
 
