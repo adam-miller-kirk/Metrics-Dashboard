@@ -1,12 +1,12 @@
 import { createStore, createTypedHooks } from "easy-peasy";
-import { baseStore } from "./models/base";
+import { records } from "./departments/records";
 
 export type Store = {
-  baseStore: typeof baseStore;
+  records: typeof records;
 };
 
 export const store = createStore<Store>({
-  baseStore,
+  records,
 });
 
 // Setup typed hooks
