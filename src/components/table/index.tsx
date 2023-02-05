@@ -55,13 +55,15 @@ const Table = () => {
     // sort product list by the count and flip for highest value first
     productList.sort((a, b) => compareValues(a.count, b.count)).reverse();
 
+    // TODO insert a controller that allows the user to pick how many recent items they want
+
     // format return object
     const formattedData = {
       totalOrders: records.length,
       inProgress,
       inProgressThisMonth,
       revenue: parseFloat(revenue.toString()).toFixed(2),
-      recentRecords: records.slice(0, 5),
+      recentRecords: records.slice(0, 9),
       topThreeProducts: productList.slice(0, 3),
     };
 
@@ -83,56 +85,51 @@ const Table = () => {
   return (
     <div className="Table">
       <div className="TableItem">
-        <strong>
+        <p>Order Details</p>
+        <div className="TableItemRow">
           <p>Total Orders</p>
           <p>{totalOrders}</p>
-        </strong>
-      </div>
-      <div className="TableItem">
-        <strong>
+        </div>
+        <div className="TableItemRow">
           <p>Total Orders this month</p>
           <p>{inProgressThisMonth}</p>
-        </strong>
-      </div>
-      <div className="TableItem">
-        <strong>
+        </div>
+        <div className="TableItemRow">
           <p>Number of orders in progress</p>
           <p>{inProgress}</p>
-        </strong>
-      </div>
-      <div className="TableItem">
-        <strong>
+        </div>
+        <div className="TableItemRow">
           <p>Revenue</p>
           <p>{`£${revenue}`}</p>
-        </strong>
+        </div>
       </div>
       <div className="TableItem">
-        <strong>
-          <p>A list of the most recent few orders</p>
-        </strong>
-        {recentRecords.map((recentRecord) => (
-          <div
-            key={`${recentRecord.order_id}_recent`}
-            className="TableItemRecords"
-          >
-            <p>{recentRecord.order_placed.toString()}</p>
-            <p>{`£${recentRecord.price}`}</p>
-            <p>{recentRecord.order_status}</p>
-            <p>{recentRecord.product_name}</p>
-          </div>
-        ))}
-      </div>
-      <div className="TableItem">
-        <strong>
-          <p>Top Three Placed Items</p>
-        </strong>
+        <p>Top Three Placed Items</p>
         {topThreeProducts.length > 0 &&
           topThreeProducts.map((product) => (
-            <div key={`${product.name}_highest`} className="TableItemRecords">
+            <div key={`${product.name}_highest`} className="TableItemRow">
               <p>{product.name}</p>
               <p>{product.count}</p>
             </div>
           ))}
+      </div>
+      <div className="TableRecordCase">
+        <p>A list of the most recent few orders</p>
+        <div className="TableRecords">
+          {recentRecords.map((recentRecord) => (
+            <div
+              key={`${recentRecord.order_id}_recent`}
+              className="TableRecordItem"
+            >
+              <p>{recentRecord.product_name}</p>
+              <div className="TableRecordItemDetails">
+                <p>{recentRecord.order_placed.toString()}</p>
+                <p>{`£${recentRecord.price}`}</p>
+                <p>{recentRecord.order_status}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

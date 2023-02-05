@@ -88,8 +88,7 @@ const Dashboard = () => {
     <div className="App">
       <Title name="Metrics Dashboard" />
       <div className="PageIntro">
-        <h3>About</h3>
-        <p>Welcome to this Metrics Dashboard.</p>
+        <p>Welcome to your Metrics Dashboard.</p>
       </div>
       <div className="PageDetail">
         {getRecordsLoading ? <Loading /> : <Table />}
