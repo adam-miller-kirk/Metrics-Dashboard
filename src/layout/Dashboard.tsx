@@ -29,7 +29,7 @@ const Dashboard = () => {
 
     // set params for sorting and filtering (offset for more pages)
     let params = {
-      pageSize: 5,
+      pageSize: 10,
       fields: [
         "order_id",
         "order_placed",
@@ -57,12 +57,12 @@ const Dashboard = () => {
         somthing that checks to see if the first item id is already in our records. If
         so break from the loop instead of repeating the data indefinitly
       */
-      //   for (let i = 0; i < 9; i++) {
-      //     params = { ...params, offset }; // update params with the new offset value
-      //     let response = await api.get(url, { params, headers }); // await the res for this additional list call
-      //     records.push(...extractedFields); // extend records with the extracted fields from this res
-      //     offset = response.data?.offset; // set the offset with new returned offset
-      //   }
+      for (let i = 0; i < 9; i++) {
+        params = { ...params, offset }; // update params with the new offset value
+        let response = await api.get(url, { params, headers }); // await the res for this additional list call
+        records.push(...extractedFields); // extend records with the extracted fields from this res
+        offset = response.data?.offset; // set the offset with new returned offset
+      }
     } catch (error) {
       // TODO insert error array or toast message
       console.error(error);

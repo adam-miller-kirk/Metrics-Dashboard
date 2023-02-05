@@ -1,42 +1,68 @@
 import React from "react";
 import { useStoreState } from ".@/store";
+import { compareValues } from ".@/utilities/compare.js";
 
 import "./Table.pcss";
 
 const Table = () => {
   const { records } = useStoreState((store) => store.records);
 
-  const formatRecords = () => {
+  const formatRecords = ({ records }) => {
     // set base values
     let revenue = 0;
     let inProgress = 0;
     let inProgressThisMonth = 0;
+    let productList = [];
 
     // get current year and month and convert into strings
     const currentYear = new Date().getFullYear().toString();
     const currentMonth = new Date().getMonth().toString();
 
     // loop through all records
-    records.every((record) => {
-      // add record price to the revenue
-      revenue = revenue + record.price;
+    for (let index = 0; index < records.length; index++) {
+      // add up all record prices that have not been cancelled
+      // if (records[index].order_status !== "cancelled") {
+      revenue = revenue + records[index].price;
+      // }
 
       // if record status is in_progress increament inProgress
-      if (record.order_status === "in_progress") inProgress++;
+      if (records[index].order_status === "in_progress") {
+        inProgress++;
+      }
 
       // seperate record date by - to compare the this year and month
-      const splitDate = record.order_placed.toString().split("-");
-      if (currentYear === splitDate[0] && currentMonth === splitDate[1])
+      const splitDate = records[index].order_placed.toString().split("-");
+      if (currentYear === splitDate[0] && currentMonth === splitDate[1]) {
         inProgressThisMonth++; // if this month increament inProgressThisMonth
-    });
+      }
+
+      // look for product_name inside the product list and return index, -1 if not found
+      const productListIndex = productList.findIndex(
+        (product) => product.name === records[index].product_name
+      );
+
+      // if productListIndex is found increase count else create new entry
+      if (productListIndex !== -1) {
+        productList[productListIndex].count++;
+      } else {
+        productList = [
+          ...productList,
+          { name: records[index].product_name, count: 1 },
+        ];
+      }
+    }
+
+    // sort product list by the count and flip for highest value first
+    productList.sort((a, b) => compareValues(a.count, b.count)).reverse();
 
     // format return object
     const formattedData = {
-      revenue: parseFloat(revenue.toString()).toFixed(2),
+      totalOrders: records.length,
       inProgress,
       inProgressThisMonth,
-      totalOrders: records.length,
+      revenue: parseFloat(revenue.toString()).toFixed(2),
       recentRecords: records.slice(0, 5),
+      topThreeProducts: productList.slice(0, 3),
     };
 
     return formattedData;
@@ -49,7 +75,8 @@ const Table = () => {
     inProgressThisMonth,
     totalOrders,
     recentRecords,
-  } = formatRecords();
+    topThreeProducts,
+  } = formatRecords({ records });
 
   // TODO currently using a string for the currency type, should come from the api instead
 
@@ -97,9 +124,15 @@ const Table = () => {
       </div>
       <div className="TableItem">
         <strong>
-          <p>Anything else I think is useful</p>
-          <p>Most baught item</p>
+          <p>Top Three Placed Items</p>
         </strong>
+        {topThreeProducts.length > 0 &&
+          topThreeProducts.map((product) => (
+            <div key={`${product.name}_highest`} className="TableItemRecords">
+              <p>{product.name}</p>
+              <p>{product.count}</p>
+            </div>
+          ))}
       </div>
     </div>
   );
