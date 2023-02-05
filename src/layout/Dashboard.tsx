@@ -29,7 +29,6 @@ const Dashboard = () => {
 
     // set params for sorting and filtering (offset for more pages)
     let params = {
-      pageSize: 10,
       fields: [
         "order_id",
         "order_placed",
